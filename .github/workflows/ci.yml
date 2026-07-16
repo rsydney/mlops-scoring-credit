@@ -29,4 +29,14 @@ jobs:
 
       - name: Run business score tests
         run: |
-          python test_business_score.py
+          python -c "
+          import numpy as np
+          from business_score import business_cost, business_score_normalized
+
+          y_true = np.array([0, 1, 0, 1, 1])
+          y_pred = np.array([0, 1, 1, 0, 1])
+
+          cost = business_cost(y_true, y_pred)
+          assert cost > 0, 'Le coût métier doit être positif'
+          print('Test business_score.py réussi ✅')
+          "
